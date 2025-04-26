@@ -1,0 +1,38 @@
+
+header {
+   position: sticky;
+   top: 5%;
+   z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+
+     
+     h1 {
+        font-size: 1.5rem;
+        font-family: 'Playfair Display', serif;
+        font-weight: 600;
+     }
+
+    .logo {
+        width: 1.25rem;
+     }
+}
+
+.header__search {
+   position: sticky;
+   z-index: 99;
+   display: flex;
+   flex-direction: column;
+   margin-block: 2rem;
+   
+}
+
+#searchbar {
+   margin-inline: auto;
+   width: 21.5625rem;
+   height: 2.875rem;
+   background: rgba(217, 217, 217, 0.3);
+   border: none;
+}

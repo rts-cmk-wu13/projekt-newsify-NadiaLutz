@@ -1,0 +1,18 @@
+{
+  "name": "projekt-newsify-nadialutz",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.87.0",
+    "vite": "^6.3.1"
+  },
+  "dependencies": {
+    "@fontsource/playfair-display": "^5.2.5"
+  }
+}
