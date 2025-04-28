@@ -1,19 +1,16 @@
-import './style/style.scss';
-import { renderHeader } from './header.js';
-import { renderFooter } from './footer.js';
+
+
 import searchElm from './search.js';
 import { createArticleCard } from './card.js';
 
-renderHeader();
+export default function renderHome(app) {
 
-const app = document.getElementById('app');
-
-document.addEventListener("DOMContentLoaded", () => {
-  app.insertBefore(searchElm, app.children[1]);
 
   const sections = ["health", "sports", "travel", "technology", "business", "world"];
   const articleContainer = document.createElement("main");
   articleContainer.id = "scrollable-content";
+
+  app.appendChild(searchElm);
   app.appendChild(articleContainer);
 
   function createSectionBlock(sectionName, articles) {
@@ -110,11 +107,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadAllSections() {
     for (const section of sections) {
+      const settingKey = `settings_${section}`;
+      const isEnabled = localStorage.getItem(settingKey);
+  
+  
+      if (isEnabled !== null && isEnabled === 'false') {
+        console.log(`Skipping section: ${section}`);
+        continue; // Skip this section if the user disabled it
+      }
+  
       const articles = await fetchSectionArticles(section);
       if (articles.length) createSectionBlock(section, articles);
     }
-    renderFooter('home');
   }
+  
+  
+  
 
   loadAllSections();
-});
+}

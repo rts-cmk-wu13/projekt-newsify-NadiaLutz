@@ -39,8 +39,13 @@ main {
     flex-direction: column;
     height: 100vh;
     overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.4s ease;
   }
 
+  #app.fade-out {
+    opacity: 0;
+  }
   
   #scrollable-content {
     flex: 1;

@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 main {
     display: flex;
     flex-direction: column;
@@ -153,9 +155,7 @@ main {
         color: white;
     }
       
-    .bookmark-btn {
-        background-color: rgba(70, 120, 27, 1)
-    }
+   
       
     .delete-btn {
         background-color: rgba(255, 93, 93, 1);
@@ -187,4 +187,29 @@ main {
 
 .card--open {
     pointer-events: auto;
+  }
+
+  .archive__btn {
+    background-color: $color-green;
+    width: 100%;
+    height: 4.5rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: white;
+  }
+  
+  .empty__archive {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    width: 100%;
+    font-size: 1.2rem;
+    color: #ffffff;
+    text-align: center;
+    padding: 2rem;
   }

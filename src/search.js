@@ -13,28 +13,41 @@ searchInput.addEventListener("keyup", () => {
   const allSections = document.querySelectorAll(".news__section");
 
   allSections.forEach(section => {
-    const articles = section.querySelectorAll(".article__card");
-    let hasMatch = false;
+    const articles = section.querySelectorAll(".article__card-container");
+    let hasVisibleArticle = false;
 
-    articles.forEach(article => {
+    articles.forEach(cardContainer => {
+      const article = cardContainer.querySelector(".article__card");
       const headline = article.querySelector("h4")?.textContent.toLowerCase() || "";
       const summary = article.querySelector("p")?.textContent.toLowerCase() || "";
       const matches = headline.includes(query) || summary.includes(query);
-      article.style.display = matches ? "block" : "none";
-      if (matches) hasMatch = true;
+
+      if (query === "" || matches) {
+        cardContainer.style.display = "block";
+      } else {
+        cardContainer.style.display = "none";
+      }
+
+      if (matches) hasVisibleArticle = true;
     });
 
     const sectionContent = section.querySelector(".articles__section");
     const arrow = section.querySelector(".section__arrow");
 
-    if (hasMatch) {
+    if (query === "") {
+      section.style.display = "block";
       sectionContent.style.display = "block";
-      sectionContent.style.maxHeight = "none";
-      arrow.style.transform = "rotate(90deg)";
-    } else {
-      sectionContent.style.display = "none";
       sectionContent.style.maxHeight = "0";
-      arrow.style.transform = "rotate(0deg)";
+      if (arrow) arrow.style.transform = "rotate(0deg)";
+    } else {
+      if (hasVisibleArticle) {
+        section.style.display = "block";
+        sectionContent.style.display = "block";
+        sectionContent.style.maxHeight = "none";
+        if (arrow) arrow.style.transform = "rotate(90deg)";
+      } else {
+        section.style.display = "none";
+      }
     }
   });
 });

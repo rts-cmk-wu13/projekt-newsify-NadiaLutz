@@ -1,0 +1,82 @@
+@use "../style/variables";
+
+.setting__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .toggle__switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+  }
+  
+  .toggle__switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 24px;
+  }
+  
+  .slider::before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  .toggle__switch input:checked + .slider {
+    background-color: variables.$color-green;
+  }
+  
+  .toggle__switch input:checked + .slider::before {
+    transform: translateX(20px);
+  }
+  
+  .darkModeBtn {
+   display: flex;
+  }
+
+  .darkmode__button {
+    margin-inline: auto;
+    background: none;
+    border: 1px solid variables.$color-green;
+    border-radius: 1.5rem;
+    color: variables.$color-green;
+    font-size: 1.25rem;
+    padding: 1rem 4rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+ 
+  .darkmode__button:active {
+    background-color: variables.$color-green;
+    color: white;
+  }
+  
+
+  body.dark__mode .darkmode__button {
+    background-color: variables.$color-green;
+    color: white;
+  }

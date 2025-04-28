@@ -7,7 +7,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         home: path.resolve(__dirname, 'home.html'),
-        archive: path.resolve(__dirname, 'archive.html'),
       }
     }
   }
