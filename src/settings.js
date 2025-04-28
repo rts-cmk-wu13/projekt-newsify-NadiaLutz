@@ -1,17 +1,26 @@
 
 
-const SECTIONS = ["health", "sports", "travel", "technology", "business", "world"];
+const sections = ["health", "sports", "travel", "technology", "business", "world"];
 
 export default function renderSettings(app) {
   const main = document.createElement('main');
   main.classList.add('settings__page');
 
+  const settingsHeadline = document.createElement('h1');
+    settingsHeadline.classList.add('settings__headline');
+    settingsHeadline.textContent = 'Settings';
+    main.appendChild(settingsHeadline);
+
+    const settingsDescription = document.createElement('p');
+    settingsDescription.classList.add('settings__description');
+    settingsDescription.textContent = 'Categories.';
+    main.appendChild(settingsDescription);
 
   const categoriesWrapper = document.createElement('div');
   categoriesWrapper.classList.add('categories__wrapper');
 
 
-  SECTIONS.forEach(section => {
+  sections.forEach(section => {
     const settingItem = document.createElement('div');
     settingItem.classList.add('setting__item');
 

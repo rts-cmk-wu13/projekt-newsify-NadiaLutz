@@ -1,19 +1,22 @@
 const onboardingData = [
     {
+      img: "src/img/onboarding1.png",
       title: "Stay Connected.\nEverywhere, Anytime.",
-      description: "Welcome to Newsify, your all-in-one hub for real-time news tailored to your interests.",
+      description: "Welcome to Newsify, your ultimate destination for breaking news, exclusive stories, and tailored content.",
       screen: "1"
     },
     {
+      img: "src/img/onboarding2.png",
       title: "Become a Savvy\nGlobal Citizen.",
-      description: "Discover what matters and align with topics that help you grow — locally and globally.",
+      description: "Discover tailored news that aligns with your interests and preferences. Your personalized news journey awaits!",
       screen: "2"
     },
     {
+      img: "src/img/onboarding3.png",
       title: "Enhance your News\nJourney Now!",
-      description: "Opt in to our dynamic community and customize your feed with category preferences.",
+      description: "Be a part of our dynamix community and contribute your insights and participate in enriching conversations.",
       screen: "3",
-      switches: ["Politics", "Travel", "Finance"]
+
     }
   ];
   

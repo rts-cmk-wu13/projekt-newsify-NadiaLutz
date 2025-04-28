@@ -2,14 +2,14 @@ import { createArticleCard } from './card.js';
 
 export default function renderArchive(app) {
   const main = document.createElement("main");
-  main.id = "scrollable-content";
+  main.id = "scrollable__content";
   app.appendChild(main);
 
   const archived = JSON.parse(localStorage.getItem("newsify__archived") || "[]");
 
   if (archived.length === 0) {
     const emptyMessage = document.createElement("div");
-    emptyMessage.className = "empty-archive";
+    emptyMessage.className = "empty__archive";
     emptyMessage.textContent = "No archived articles yet.";
     main.appendChild(emptyMessage);
     return;
@@ -61,7 +61,7 @@ export default function renderArchive(app) {
 
     const articlesWrapper = document.createElement("div");
     articlesWrapper.className = "articles__section";
-    articlesWrapper.style.maxHeight = "none"; // Always expanded
+    articlesWrapper.style.maxHeight = "none"; 
 
     sections[sectionName].forEach(article => {
       const card = createArticleCard(
