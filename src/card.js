@@ -11,8 +11,8 @@ function setStored(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
-const bookmarked = getStored(STORAGE_KEYS.bookmarked);
-const archived = getStored(STORAGE_KEYS.archived);
+let bookmarked = getStored(STORAGE_KEYS.bookmarked);
+let archived = getStored(STORAGE_KEYS.archived);
 
 export function isBookmarked(url) {
   return bookmarked.includes(url);
@@ -22,19 +22,22 @@ export function isArchived(url) {
   return archived.includes(url);
 }
 
-let currentlySwipedCard = null;
+let currentlySwipedWrapper = null;
 
 export function createArticleCard(title, abstract, url, thumbnail, section, mode = "home") {
-  if (mode === "home" && isArchived(url)) return null;
+  if ((mode === "home" || mode === "popular") && isArchived(url)) return null;
 
   const cardContainer = document.createElement("div");
   cardContainer.className = "article__card-container";
+
+  const cardWrapper = document.createElement("div");
+  cardWrapper.className = "article__card-wrapper";
 
   const card = document.createElement("div");
   card.className = "article__card";
 
   const img = document.createElement("img");
-  img.src = thumbnail || "src/img/newsify_logo.png";
+  img.src = typeof thumbnail === "string" && thumbnail.trim() !== "" ? thumbnail : "src/img/newsify_logo.png";
 
   const content = document.createElement("div");
   content.className = "article__content";
@@ -45,25 +48,28 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
   const p = document.createElement("p");
   p.textContent = abstract;
 
-  const a = document.createElement("a");
-  a.href = url;
-  a.target = "_blank";
-  a.textContent = "Read more";
-  a.className = "article__link";
+  content.appendChild(h4);
+  content.appendChild(p);
+
+  card.appendChild(img);
+  card.appendChild(content);
+  cardWrapper.appendChild(card);
+  cardContainer.appendChild(cardWrapper);
 
   const actions = document.createElement("div");
   actions.className = "article__actions";
 
-  if (mode === "home") {
+  if (mode === "home" || mode === "popular") {
     const archiveBtn = document.createElement("button");
     archiveBtn.className = "action__btn archive__btn";
     archiveBtn.title = "Archive";
 
     const archiveImg = document.createElement("img");
-    archiveImg.src = isArchived(url) 
+    archiveImg.src = isArchived(url)
       ? "src/img/feather_archive-filled.png"
       : "src/img/feather_archive-white.png";
     archiveImg.alt = "Archive Icon";
+
     archiveBtn.appendChild(archiveImg);
 
     archiveBtn.addEventListener("click", (e) => {
@@ -73,7 +79,6 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
       if (!archived.includes(url)) {
         archived.push(url);
         setStored(STORAGE_KEYS.archived, archived);
-
         archiveImg.src = "src/img/feather_archive-filled.png";
 
         setTimeout(() => {
@@ -84,7 +89,7 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
           setTimeout(() => {
             cardContainer.remove();
           }, 300);
-        }, 200); 
+        }, 200);
       }
     });
 
@@ -93,12 +98,13 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
 
   if (mode === "archives") {
     const deleteBtn = document.createElement("button");
-    deleteBtn.className = "action-btn delete-btn";
+    deleteBtn.className = "action__btn delete__btn";
     deleteBtn.title = "Delete";
 
     const deleteImg = document.createElement("img");
     deleteImg.src = "src/img/feather_trash.png";
     deleteImg.alt = "Delete Icon";
+
     deleteBtn.appendChild(deleteImg);
 
     deleteBtn.addEventListener("click", (e) => {
@@ -110,6 +116,7 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
         archived.splice(index, 1);
         setStored(STORAGE_KEYS.archived, archived);
       }
+
       const bookmarkIndex = bookmarked.indexOf(url);
       if (bookmarkIndex > -1) {
         bookmarked.splice(bookmarkIndex, 1);
@@ -135,14 +142,6 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
     actions.appendChild(deleteBtn);
   }
 
-  content.appendChild(h4);
-  content.appendChild(p);
-  content.appendChild(a);
-
-  card.appendChild(img);
-  card.appendChild(content);
-
-  cardContainer.appendChild(card);
   cardContainer.appendChild(actions);
 
   let startX = 0;
@@ -150,40 +149,48 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
   const threshold = 50;
   let isSwiping = false;
 
-  card.addEventListener("touchstart", (e) => {
-    if (e.target.closest("button") || card.classList.contains("card--open")) {
+  cardWrapper.addEventListener("touchstart", (e) => {
+    if (e.target.closest("button")) {
       isSwiping = false;
       return;
     }
     startX = e.touches[0].clientX;
     isSwiping = true;
-    card.style.transition = "";
+    cardWrapper.style.transition = "";
   });
 
-  card.addEventListener("touchmove", (e) => {
+  cardWrapper.addEventListener("touchmove", (e) => {
     if (!isSwiping) return;
     const moveX = e.touches[0].clientX;
     currentX = moveX - startX;
     if (currentX < 0) {
-      card.style.transform = `translateX(${currentX}px)`;
+      cardWrapper.style.transform = `translateX(${currentX}px)`;
     }
   });
 
-  card.addEventListener("touchend", () => {
+  cardWrapper.addEventListener("touchend", () => {
     if (!isSwiping) return;
-    card.style.transition = "transform 0.3s ease";
+    cardWrapper.style.transition = "transform 0.3s ease";
+
     if (currentX < -threshold) {
-      card.style.transform = "translateX(-80px)";
-      card.classList.add("card--open");
-      currentlySwipedCard = card;
+      cardWrapper.style.transform = "translateX(-80px)";
+      cardWrapper.classList.add("card--open");
+      currentlySwipedWrapper = cardWrapper;
     } else {
-      card.style.transform = "translateX(0)";
-      card.classList.remove("card--open");
-      currentlySwipedCard = null;
+      cardWrapper.style.transform = "translateX(0)";
+      cardWrapper.classList.remove("card--open");
+      currentlySwipedWrapper = null;
     }
+
     isSwiping = false;
     startX = 0;
     currentX = 0;
+  });
+
+  content.addEventListener("click", () => {
+    if (!cardWrapper.classList.contains("card--open")) {
+      window.open(url, "_blank");
+    }
   });
 
   return cardContainer;
@@ -191,13 +198,13 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
 
 document.addEventListener("touchstart", (e) => {
   if (
-    currentlySwipedCard &&
-    !currentlySwipedCard.contains(e.target) &&
-    !e.target.closest(".action-btn")
+    currentlySwipedWrapper &&
+    !currentlySwipedWrapper.contains(e.target) &&
+    !e.target.closest(".action__btn")
   ) {
-    currentlySwipedCard.style.transition = "transform 0.3s ease";
-    currentlySwipedCard.style.transform = "translateX(0)";
-    currentlySwipedCard.classList.remove("card--open");
-    currentlySwipedCard = null;
+    currentlySwipedWrapper.style.transition = "transform 0.3s ease";
+    currentlySwipedWrapper.style.transform = "translateX(0)";
+    currentlySwipedWrapper.classList.remove("card--open");
+    currentlySwipedWrapper = null;
   }
 });

@@ -1,17 +1,17 @@
-
-
 import searchElm from './search.js';
 import { createArticleCard } from './card.js';
+import { updateArrows } from './footer.js';
 
 export default function renderHome(app) {
-
-
   const sections = ["health", "sports", "travel", "technology", "business", "world"];
   const articleContainer = document.createElement("main");
-  articleContainer.id = "scrollable-content";
+  articleContainer.id = "scrollable__content";
 
   app.appendChild(searchElm);
   app.appendChild(articleContainer);
+
+  const lastFetchTimes = {};
+  const MIN_FETCH_INTERVAL = 2 * 60 * 1000; 
 
   function createSectionBlock(sectionName, articles) {
     const section = document.createElement("section");
@@ -38,6 +38,7 @@ export default function renderHome(app) {
     const arrow = document.createElement("img");
     arrow.className = "section__arrow";
     arrow.src = "src/img/arrow.png";
+    arrow.style.transition = "transform 0.3s ease"; 
 
     header.appendChild(left);
     header.appendChild(arrow);
@@ -93,6 +94,12 @@ export default function renderHome(app) {
       }
     }
 
+    const now = Date.now();
+    if (lastFetchTimes[section] && now - lastFetchTimes[section] < MIN_FETCH_INTERVAL) {
+      return [];
+    }
+    lastFetchTimes[section] = now;
+
     try {
       const res = await fetch(`https://api.nytimes.com/svc/topstories/v2/${section}.json?api-key=FG3G63jj17v5jMUHDO6B7CqrIwAUTY9a`);
       const data = await res.json();
@@ -101,6 +108,7 @@ export default function renderHome(app) {
       localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), results }));
       return results;
     } catch (err) {
+      console.error("Fetching error:", err);
       return [];
     }
   }
@@ -109,20 +117,19 @@ export default function renderHome(app) {
     for (const section of sections) {
       const settingKey = `settings_${section}`;
       const isEnabled = localStorage.getItem(settingKey);
-  
-  
+
       if (isEnabled !== null && isEnabled === 'false') {
         console.log(`Skipping section: ${section}`);
-        continue; // Skip this section if the user disabled it
+        continue;
       }
-  
+
       const articles = await fetchSectionArticles(section);
       if (articles.length) createSectionBlock(section, articles);
     }
+    updateArrows();
   }
-  
-  
-  
 
   loadAllSections();
+  return articleContainer;
 }
+

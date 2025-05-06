@@ -24,18 +24,29 @@ export function renderFooter(activePage) {
 
 export function updateFooterIcons(activePage) {
   const isDarkMode = document.body.classList.contains('dark__mode');
-
   const footerLinks = document.querySelectorAll('.footer__link');
 
   footerLinks.forEach(link => {
     const page = link.dataset.page;
     const img = link.querySelector('img');
 
-    const basePath = `src/img/feather_${page}`;
-    const imgSrc = activePage === page
-      ? `${basePath}-active${isDarkMode ? '-light' : ''}.png`
-      : `${basePath}${isDarkMode ? '-light' : ''}.png`;
+    let imgSrc;
+    if (activePage === page) {
+      imgSrc = `src/img/feather_${page}-active.png`;
+    } else {
+      imgSrc = `src/img/feather_${page}${isDarkMode ? '-light' : ''}.png`;
+    }
 
     img.src = imgSrc;
+  });
+}
+
+
+export function updateArrows() {
+  const isDarkMode = document.body.classList.contains('dark__mode');
+  const arrows = document.querySelectorAll('.section__arrow');
+
+  arrows.forEach(arrow => {
+    arrow.src = `src/img/arrow${isDarkMode ? '-light' : ''}.png`;
   });
 }

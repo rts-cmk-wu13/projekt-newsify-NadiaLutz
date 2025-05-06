@@ -16,6 +16,13 @@ html, body {
   line-height: 1.5;
   color: $dark-color;
   background: $light-color;
+  height: 100%;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -57,14 +64,18 @@ button {
 
 #scrollable__content {
   flex: 1;
-  overflow-y: auto;
-  padding: 1rem 1rem 4rem 1rem;
-  margin-block-end: 4rem;
+  padding: 1rem;
+  overflow: scroll;
 }
 
 main {
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
+  min-width: 100vw;
+  height: auto;
+  flex: 1;
 }
 
 body.dark__mode {
@@ -74,9 +85,5 @@ body.dark__mode {
   a,
   button {
     color: $light-color;
-  }
-
-  .setting__item {
-    background: rgba(255, 255, 255, 0.05);
   }
 }

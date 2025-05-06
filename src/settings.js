@@ -1,4 +1,4 @@
-
+import { updateFooterIcons } from './footer.js';
 
 const sections = ["health", "sports", "travel", "technology", "business", "world"];
 
@@ -13,7 +13,7 @@ export default function renderSettings(app) {
 
     const settingsDescription = document.createElement('p');
     settingsDescription.classList.add('settings__description');
-    settingsDescription.textContent = 'Categories.';
+    settingsDescription.textContent = 'Categories';
     main.appendChild(settingsDescription);
 
   const categoriesWrapper = document.createElement('div');
@@ -24,8 +24,19 @@ export default function renderSettings(app) {
     const settingItem = document.createElement('div');
     settingItem.classList.add('setting__item');
 
+    const settingItemLeft = document.createElement('div');
+    settingItemLeft.classList.add('setting__item-left');
+    settingItem.appendChild(settingItemLeft);
+
+    const logoImg = document.createElement('img');
+    logoImg.src = "src/img/newsify_logo.png";
+    logoImg.alt = "Section logo";
+    logoImg.classList.add('section__logo');
+
     const label = document.createElement('span');
     label.textContent = section.charAt(0).toUpperCase() + section.slice(1);
+  
+    settingItemLeft.append(logoImg, label);
 
     const toggleWrapper = document.createElement('label');
     toggleWrapper.classList.add('toggle__switch');
@@ -40,8 +51,13 @@ export default function renderSettings(app) {
 
  
     const saved = localStorage.getItem(`settings_${section}`);
+
+toggle.checked = true;
+
     if (saved === 'true') {
       toggle.checked = true;
+    } else if (saved === 'false') {
+      toggle.checked = false;
     }
 
     toggle.addEventListener('change', (e) => {
@@ -51,7 +67,7 @@ export default function renderSettings(app) {
     toggleWrapper.appendChild(toggle);
     toggleWrapper.appendChild(slider);
 
-    settingItem.appendChild(label);
+  
     settingItem.appendChild(toggleWrapper);
     categoriesWrapper.appendChild(settingItem);
   });
@@ -83,6 +99,11 @@ export default function renderSettings(app) {
   darkButton.addEventListener('click', () => {
     const isDark = document.body.classList.toggle('dark__mode');
     localStorage.setItem('settings__darkMode', isDark);
+  
+    const activeLink = document.querySelector('.footer__link.active');
+    const activePage = activeLink ? activeLink.dataset.page : 'home';
+  
+    updateFooterIcons(activePage);
   });
 
   darkModeItem.appendChild(darkButton);

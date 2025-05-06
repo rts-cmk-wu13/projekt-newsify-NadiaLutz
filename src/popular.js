@@ -9,13 +9,14 @@ export default function renderPopular(app) {
 
   async function fetchPopularArticles() {
     const cacheKey = "nyt_popular_cache";
-    const cachedData = localStorage.getItem(cacheKey);
     const oneHour = 1000 * 60 * 60;
+    const cachedData = JSON.parse(localStorage.getItem(cacheKey) || "null");
 
-    if (cachedData) {
-      const { timestamp, results } = JSON.parse(cachedData);
-      if (Date.now() - timestamp < oneHour) {
-        return results;
+    if (cachedData && cachedData.timestamp && Array.isArray(cachedData.results)) {
+      if (Date.now() - cachedData.timestamp < oneHour) {
+        return cachedData.results;
+      } else {
+        localStorage.removeItem(cacheKey);
       }
     }
 
@@ -23,8 +24,36 @@ export default function renderPopular(app) {
       const res = await fetch(`https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json?api-key=${accessToken}`);
       const data = await res.json();
       if (!data.results) return [];
-      const results = data.results.slice(0, 20);
+
+      const results = data.results.slice(0, 20).map(article => {
+        let image = null;
+
+        if (
+          article.media &&
+          Array.isArray(article.media) &&
+          article.media.length > 0 &&
+          article.media[0]['media-metadata'] &&
+          Array.isArray(article.media[0]['media-metadata']) &&
+          article.media[0]['media-metadata'].length > 0
+        ) {
+          const metadata = article.media[0]['media-metadata'];
+          image = metadata[2]?.url || metadata[1]?.url || metadata[0]?.url || null;
+        }
+
+        const simplified = {
+          title: article.title,
+          abstract: article.abstract,
+          url: article.url,
+          thumbnail: image,
+          section: article.section || "Other"
+        };
+
+        localStorage.setItem(`article__${article.url}`, JSON.stringify(simplified));
+        return simplified;
+      });
+
       localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), results }));
+
       return results;
     } catch (err) {
       console.error("Failed to fetch popular articles", err);
@@ -34,7 +63,6 @@ export default function renderPopular(app) {
 
   async function loadPopularArticles() {
     const articles = await fetchPopularArticles();
-
     const sections = {};
 
     articles.forEach(article => {
@@ -42,25 +70,7 @@ export default function renderPopular(app) {
       if (!sections[sectionName]) {
         sections[sectionName] = [];
       }
-
-      const image = (article.media && article.media.length > 0 && article.media[0]["media-metadata"])
-        ? article.media[0]["media-metadata"][2].url
-        : null;
-
-      sections[sectionName].push({
-        title: article.title,
-        abstract: article.abstract,
-        url: article.url,
-        thumbnail: image,
-        section: sectionName
-      });
-
-      localStorage.setItem(`article__${article.url}`, JSON.stringify({
-        title: article.title,
-        abstract: article.abstract,
-        thumbnail: image,
-        section: sectionName
-      }));
+      sections[sectionName].push(article);
     });
 
     Object.keys(sections).forEach(sectionName => {
@@ -88,14 +98,14 @@ export default function renderPopular(app) {
       const arrow = document.createElement("img");
       arrow.className = "section__arrow";
       arrow.src = "src/img/arrow.png";
-      arrow.style.transform = "rotate(0deg)"; // collapsed by default
+      arrow.style.transform = "rotate(0deg)";
 
       header.appendChild(left);
       header.appendChild(arrow);
 
       const articlesWrapper = document.createElement("div");
       articlesWrapper.className = "articles__section";
-      articlesWrapper.style.maxHeight = "0"; // collapsed by default
+      articlesWrapper.style.maxHeight = "0";
       articlesWrapper.style.overflow = "hidden";
       articlesWrapper.style.transition = "max-height 0.4s ease";
 

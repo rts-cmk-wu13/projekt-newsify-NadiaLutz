@@ -1,11 +1,39 @@
-@use "../style/variables";
+@use "variables" as *;
+
+
+.settings__headline {
+  text-align: center;
+  color: $color-green;
+  margin-block: 2rem 1rem;
+}
+
+.settings__description {
+  text-align: center; 
+}
 
 .setting__item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #a0a0a0;
+    padding-inline: 2rem;
+
+    span {
+     font-weight: bold;
+     text-transform: uppercase;
+    }
+
+    .setting__item-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+  }
+
+  .section__logo {
+    width: 1rem;
   }
   
   .toggle__switch {
@@ -46,7 +74,7 @@
   }
   
   .toggle__switch input:checked + .slider {
-    background-color: variables.$color-green;
+    background-color: $color-green;
   }
   
   .toggle__switch input:checked + .slider::before {
@@ -60,23 +88,24 @@
   .darkmode__button {
     margin-inline: auto;
     background: none;
-    border: 1px solid variables.$color-green;
+    border: 1px solid $color-green;
     border-radius: 1.5rem;
-    color: variables.$color-green;
+    color: $color-green;
     font-size: 1.25rem;
     padding: 1rem 4rem;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   }
   
  
   .darkmode__button:active {
-    background-color: variables.$color-green;
+    background-color: $color-green;
+    transform: scale(0.95);
     color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
   
-
   body.dark__mode .darkmode__button {
-    background-color: variables.$color-green;
+    background-color: $color-green;
     color: white;
   }

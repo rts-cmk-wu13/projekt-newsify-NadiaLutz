@@ -7,6 +7,8 @@ import renderLogin from './login.js';
 import renderPopular from './popular.js';
 import renderArchive from './archive.js';
 import renderSettings from './settings.js'; 
+import setupDarkMode from './darkmode.js';
+import initPullToRefresh from './refresh.js';
 
 const app = document.getElementById('app');
 
@@ -26,8 +28,20 @@ function fadeAndRenderHome() {
   setTimeout(() => {
     app.innerHTML = "";
     renderHeader(app);
-    renderHome(app);
+    const container = renderHome(app);
     renderFooter('home');
+
+    function handleRefresh() {
+      app.innerHTML = "";
+      renderHeader(app);
+      const refreshedContainer = renderHome(app);
+      renderFooter('home');
+      initPullToRefresh(refreshedContainer, handleRefresh);
+      setupNavigation();
+    }
+
+    initPullToRefresh(container, handleRefresh);
+
     setupNavigation();
     app.classList.remove("fade-out");
   }, 400);
@@ -69,11 +83,11 @@ function fadeAndRenderSettings() {
   }, 400);
 }
 
-
 function fadeAndRenderLogin() {
   app.classList.add("fade-out");
   setTimeout(() => {
     app.innerHTML = "";
+    renderHeader(app);
     renderLogin(app);
     app.classList.remove("fade-out");
   }, 400);
@@ -81,7 +95,6 @@ function fadeAndRenderLogin() {
 
 function setupNavigation() {
   const navButtons = document.querySelectorAll("button[id^='nav-']");
-
   navButtons.forEach(button => {
     button.addEventListener("click", (e) => {
       const id = e.currentTarget.id;
@@ -97,3 +110,5 @@ function setupNavigation() {
     });
   });
 }
+
+setupDarkMode();

@@ -20,11 +20,11 @@ export default function renderArchive(app) {
   archived.forEach(url => {
     const articleData = JSON.parse(localStorage.getItem(`article__${url}`));
     if (!articleData) return;
-    
+
     if (!sections[articleData.section]) {
       sections[articleData.section] = [];
     }
-    
+
     sections[articleData.section].push({
       title: articleData.title,
       abstract: articleData.abstract,
@@ -61,7 +61,7 @@ export default function renderArchive(app) {
 
     const articlesWrapper = document.createElement("div");
     articlesWrapper.className = "articles__section";
-    articlesWrapper.style.maxHeight = "none"; 
+    articlesWrapper.style.maxHeight = "none";
 
     sections[sectionName].forEach(article => {
       const card = createArticleCard(
@@ -72,7 +72,7 @@ export default function renderArchive(app) {
         article.section,
         "archives"
       );
-      
+
       if (card) articlesWrapper.appendChild(card);
     });
 
