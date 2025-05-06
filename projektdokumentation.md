@@ -1,8 +1,8 @@
 # Projektdokumentation
 
-**Navn:** 
+**Navn:** NLutz
 
-**Hold:** WUxx
+**Hold:** WU13
 
 **Uddannelse:** Webudvikler
 

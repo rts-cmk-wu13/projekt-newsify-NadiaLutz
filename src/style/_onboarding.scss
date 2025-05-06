@@ -1,0 +1,84 @@
+@use 'variables' as *;
+
+
+.onboarding {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+ 
+  h2 {
+    font-weight: black;
+    text-align: center;
+    font-size: 2rem;
+    margin-inline: 3rem;
+  }
+
+  p {
+    margin-inline: 1rem;
+    text-align: center;
+  }
+
+  img {
+    width: 100%;
+    max-width: 20rem;
+    margin-block: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.144);
+    transition: transform 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+}
+
+.onboarding__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-block: 3rem;
+  }
+  
+  .dot {
+   width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: #ccc;
+    transition: background-color 0.3s;
+  }
+  
+  .dot.active {
+    background-color: $color-green;
+    width: 4.125rem;
+    height: 1rem;
+    border-radius: 1rem;
+
+  }
+
+  .onboarding__controls {
+    display: flex;
+    justify-content: space-evenly;
+  
+    .onboarding__next, .onboarding__skip {
+      background: none;
+      border: 1px solid $color-green;
+      border-radius: 1.5rem;
+      padding: 1rem 3rem;
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+
+    .onboarding__next {
+      background-color: $color-green;
+      color: white;
+    }
+
+    .onboarding__skip {
+      color: $color-green;
+      background: none;
+    }
+  }
+
+
+

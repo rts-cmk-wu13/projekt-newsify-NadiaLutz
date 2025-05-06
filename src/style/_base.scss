@@ -1,0 +1,89 @@
+@use './variables' as *;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+html, body {
+  font-family: $font-family-base;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: $dark-color;
+  background: $light-color;
+  height: 100%;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+#app {
+  padding-block-start: 4rem;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+
+  &.fade-out {
+    opacity: 0;
+  }
+}
+
+#scrollable__content {
+  flex: 1;
+  padding: 1rem;
+  overflow: scroll;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 100vw;
+  height: auto;
+  flex: 1;
+}
+
+body.dark__mode {
+  background: $dark-color;
+  color: $light-color;
+
+  a,
+  button {
+    color: $light-color;
+  }
+}
