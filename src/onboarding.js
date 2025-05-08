@@ -1,3 +1,10 @@
+const storedTheme = localStorage.getItem("theme");
+if (storedTheme === "dark") {
+  document.body.classList.add("dark");
+} else {
+  document.body.classList.remove("dark");
+}
+
 import onboarding1 from './img/onboarding1.png';
 import onboarding2 from './img/onboarding2.png';
 import onboarding3 from './img/onboarding3.png';
@@ -18,7 +25,7 @@ const onboardingData = [
   {
     img: onboarding3,
     title: "Enhance your News\nJourney Now!",
-    description: "Be a part of our dynamix community and contribute your insights and participate in enriching conversations.",
+    description: "Be a part of our dynamic community and contribute your insights and participate in enriching conversations.",
     screen: "3"
   }
 ];

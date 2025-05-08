@@ -8,10 +8,6 @@
   height: 100vh;
   background-color: $light-color;
   transition: opacity 1s ease;
-
-  body.dark & {
-    background-color: $dark-color;
-  }
 }
 
 .intro-logo {
@@ -26,9 +22,17 @@
   font-size: 3.5rem;
   font-weight: bold;
   opacity: 0;
-  transition: opacity 1s ease;
+  transition: opacity 1s ease, color 1s ease;
+  color: $dark-color;
+}
 
-  body.dark & {
-    color: fff;
+// Dark mode specific styles
+body.dark__mode {
+  .intro-container {
+    background-color: $dark-color;
+  }
+  
+  .intro-text {
+    color: $light-color;
   }
 }
