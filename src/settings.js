@@ -29,7 +29,7 @@ export default function renderSettings(app) {
     settingItem.appendChild(settingItemLeft);
 
     const logoImg = document.createElement('img');
-    logoImg.src = "src/img/newsify_logo.png";
+    logoImg.src = "/img/newsify_logo.png";
     logoImg.alt = "Section logo";
     logoImg.classList.add('section__logo');
 

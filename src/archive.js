@@ -45,7 +45,7 @@ export default function renderArchive(app) {
     left.className = "article__item";
 
     const logoImg = document.createElement("img");
-    logoImg.src = "src/img/newsify_logo.png";
+    logoImg.src = "/img/newsify_logo.png";
     logoImg.alt = "Section logo";
     logoImg.className = "section__logo";
 
