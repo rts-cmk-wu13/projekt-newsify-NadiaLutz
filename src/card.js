@@ -37,7 +37,8 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
   card.className = "article__card";
 
   const img = document.createElement("img");
-  img.src = typeof thumbnail === "string" && thumbnail.trim() !== "" ? thumbnail : "src/img/newsify_logo.png";
+  img.src = typeof thumbnail === "string" && thumbnail.length > 0 ? thumbnail : "/img/newsify_logo.png";
+
 
   const content = document.createElement("div");
   content.className = "article__content";
