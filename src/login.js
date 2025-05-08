@@ -42,38 +42,61 @@ export default function renderLogin(app) {
   const loginButton = document.createElement("button");
   loginButton.className = "login__button";
   loginButton.type = "submit";
-  loginButton.textContent = "Sign in with password";
+  loginButton.textContent = "Login";
 
-  const signUpContainer = document.createElement("div");
-  signUpContainer.className = "login__signup-container";
-  
-  const loginWithEmail = document.createElement("div");
-  loginWithEmail.className = "login__with-email";
-  loginWithEmail.textContent = "Don't have an account?";
-  
-  const signUpButton = document.createElement("button");
-  signUpButton.className = "login__signup-button";
-  signUpButton.textContent = "Sign up";
-  
-  signUpContainer.append(loginWithEmail, signUpButton);
+  form.append(emailInput, passwordInput, loginButton);
 
-  form.append(emailInput, passwordInput, loginButton, signUpContainer);
+  const passwordButton = document.createElement("button");
+  passwordButton.className = "login__password-button";
+  passwordButton.textContent = "Sign in with password";
 
-  form.addEventListener("submit", (e) => {
+  const modalOverlay = document.createElement("div");
+  modalOverlay.className = "login__modal-overlay";
+  modalOverlay.style.display = "none";
+
+  const modal = document.createElement("div");
+  modal.className = "login__modal";
+
+  const modalClose = document.createElement("span");
+  modalClose.className = "login__modal-close";
+  modalClose.textContent = "×";
+  modalClose.addEventListener("click", () => {
+    modalOverlay.style.display = "none";
+  });
+
+  modal.append(modalClose, form);
+  modalOverlay.appendChild(modal);
+  document.body.appendChild(modalOverlay);
+
+  passwordButton.addEventListener("click", (e) => {
     e.preventDefault();
-    localStorage.setItem("isLoggedIn", "true");
+    modalOverlay.style.display = "flex";
+  });
+
+  const bottomText = document.createElement("p");
+  bottomText.className = "login__bottom";
+  bottomText.innerHTML = `Don't have an account? <span class="signup">Sign up</span> or <span class="guest">Continue as guest</span>`;
+
+  bottomText.querySelector(".signup").addEventListener("click", (e) => {
+    e.preventDefault();
+  });
+
+  bottomText.querySelector(".guest").addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.setItem("onboardingCompleted", "true");
+    localStorage.setItem("loggedIn", "true");
     window.location.reload();
   });
 
-  loginContainer.append(logo, title, span);
   soMeContainer.append(facebookButton, googleButton);
-  loginContainer.appendChild(soMeContainer);
-  loginContainer.appendChild(form);
-  app.appendChild(loginContainer);
+  loginContainer.append(
+    logo,
+    title,
+    span,
+    soMeContainer,
+    passwordButton,
+    bottomText
+  );
+
+  app.append(loginContainer);
 }
-
-
-
-// localStorage.setItem('onboardingCompleted','true');
-// localStorage.setItem('loggedIn','true');   // ← key name matters!
-// location.reload();  

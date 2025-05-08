@@ -9,18 +9,25 @@ import renderArchive from './archive.js';
 import renderSettings from './settings.js'; 
 import setupDarkMode from './darkmode.js';
 import initPullToRefresh from './refresh.js';
+import renderIntro from './intro.js';
 
 const app = document.getElementById('app');
 
-if (!localStorage.getItem("onboardingCompleted")) {
-  renderOnboarding(app, () => {
-    localStorage.setItem("onboardingCompleted", "true");
+renderIntro(app, initApp);
+
+function initApp() {
+  if (!localStorage.getItem("onboardingCompleted")) {
+    renderOnboarding(app, () => {
+      localStorage.setItem("onboardingCompleted", "true");
+      fadeAndRenderLogin();
+    });
+  } else if (!localStorage.getItem("loggedIn")) {
     fadeAndRenderLogin();
-  });
-} else if (!localStorage.getItem("loggedIn")) {
-  fadeAndRenderLogin();
-} else {
-  fadeAndRenderHome();
+  } else {
+    fadeAndRenderHome();
+  }
+
+  setupDarkMode();
 }
 
 function fadeAndRenderHome() {
@@ -41,7 +48,6 @@ function fadeAndRenderHome() {
     }
 
     initPullToRefresh(container, handleRefresh);
-
     setupNavigation();
     app.classList.remove("fade-out");
   }, 400);
@@ -110,5 +116,3 @@ function setupNavigation() {
     });
   });
 }
-
-setupDarkMode();
