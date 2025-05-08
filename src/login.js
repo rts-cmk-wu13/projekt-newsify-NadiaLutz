@@ -1,3 +1,10 @@
+const storedTheme = localStorage.getItem("theme");
+if (storedTheme === "dark") {
+  document.body.classList.add("dark");
+} else {
+  document.body.classList.remove("dark");
+}
+
 export default function renderLogin(app) {
   app.innerHTML = "";
 

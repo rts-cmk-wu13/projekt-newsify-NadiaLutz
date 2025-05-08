@@ -1,3 +1,10 @@
+const storedTheme = localStorage.getItem("theme");
+if (storedTheme === "dark") {
+  document.body.classList.add("dark__mode");
+} else {
+  document.body.classList.remove("dark__mode");
+}
+
 import './style/style.scss';
 import { renderHeader } from './header.js';
 import { renderFooter } from './footer.js';
@@ -13,6 +20,9 @@ import renderIntro from './intro.js';
 
 const app = document.getElementById('app');
 
+setupDarkMode();
+
+
 renderIntro(app, initApp);
 
 function initApp() {
@@ -27,7 +37,7 @@ function initApp() {
     fadeAndRenderHome();
   }
 
-  setupDarkMode();
+ 
 }
 
 function fadeAndRenderHome() {

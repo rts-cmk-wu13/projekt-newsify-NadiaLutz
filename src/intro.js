@@ -1,5 +1,6 @@
 export default function renderIntro(app, onComplete) {
     app.innerHTML = "";
+  
     const container = document.createElement("div");
     container.className = "intro-container";
   
@@ -29,4 +30,3 @@ export default function renderIntro(app, onComplete) {
       setTimeout(() => onComplete(), 1000);
     }, 2500);
   }
-  
