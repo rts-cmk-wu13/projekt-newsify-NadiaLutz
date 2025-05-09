@@ -5,6 +5,9 @@ if (storedTheme === "dark") {
   document.body.classList.remove("dark");
 }
 
+//WRTING A COMMENT JUST TO TEST GIT
+// }
+
 const onboardingData = [
   {
     img: '/img/onboarding1.png',
