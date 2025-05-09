@@ -97,7 +97,7 @@ export default function renderPopular(app) {
 
       const arrow = document.createElement("img");
       arrow.className = "section__arrow";
-      arrow.src = "src/img/arrow.png";
+      arrow.src = "/img/arrow.png";
       arrow.style.transform = "rotate(0deg)";
 
       header.appendChild(left);

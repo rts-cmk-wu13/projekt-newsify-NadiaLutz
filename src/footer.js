@@ -32,9 +32,9 @@ export function updateFooterIcons(activePage) {
 
     let imgSrc;
     if (activePage === page) {
-      imgSrc = `src/img/feather_${page}-active.png`;
+      imgSrc = `/img/feather_${page}-active.png`;
     } else {
-      imgSrc = `src/img/feather_${page}${isDarkMode ? '-light' : ''}.png`;
+      imgSrc = `/img/feather_${page}${isDarkMode ? '-light' : ''}.png`;
     }
 
     img.src = imgSrc;
@@ -47,6 +47,6 @@ export function updateArrows() {
   const arrows = document.querySelectorAll('.section__arrow');
 
   arrows.forEach(arrow => {
-    arrow.src = `src/img/arrow${isDarkMode ? '-light' : ''}.png`;
+    arrow.src = `/img/arrow${isDarkMode ? '-light' : ''}.png`;
   });
 }
