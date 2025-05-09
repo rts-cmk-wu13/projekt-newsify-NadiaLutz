@@ -1,0 +1,111 @@
+@use "variables" as *;
+
+
+.settings__headline {
+  text-align: center;
+  color: $color-green;
+  margin-block: 2rem 1rem;
+}
+
+.settings__description {
+  text-align: center; 
+}
+
+.setting__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #a0a0a0;
+    padding-inline: 2rem;
+
+    span {
+     font-weight: bold;
+     text-transform: uppercase;
+    }
+
+    .setting__item-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+  }
+
+  .section__logo {
+    width: 1rem;
+  }
+  
+  .toggle__switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+  }
+  
+  .toggle__switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 24px;
+  }
+  
+  .slider::before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  .toggle__switch input:checked + .slider {
+    background-color: $color-green;
+  }
+  
+  .toggle__switch input:checked + .slider::before {
+    transform: translateX(20px);
+  }
+  
+  .darkModeBtn {
+   display: flex;
+  }
+
+  .darkmode__button {
+    margin-inline: auto;
+    background: none;
+    border: 1px solid $color-green;
+    border-radius: 1.5rem;
+    color: $color-green;
+    font-size: 1.25rem;
+    padding: 1rem 4rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  }
+  
+ 
+  .darkmode__button:active {
+    background-color: $color-green;
+    transform: scale(0.95);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  body.dark__mode .darkmode__button {
+    background-color: $color-green;
+    color: white;
+  }
