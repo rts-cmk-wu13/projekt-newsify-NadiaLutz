@@ -55,3 +55,17 @@ footer {
   .footer__list {
     z-index: 3;
   }
+
+
+  body.dark__mode footer {
+    background: $dark-color;
+    color: $light-color;
+  
+    .footer__link.active {
+      color: $color-green;
+    }
+  
+    img {
+      filter: brightness(0.85) contrast(1.1);
+    }
+  }
