@@ -22,10 +22,10 @@ const onboardingData = [
     img: '/img/onboarding3.png',
     title: "Enhance your News\nJourney Now!",
     description: "Be a part of our dynamic community and contribute your insights and participate in enriching conversations.",
-    screen: "3"
+    screen: "3" 
   }
 ];
-
+ 
 export default function renderOnboarding(app, onComplete) {
   let currentSlide = 0;
   const container = document.createElement("main");
