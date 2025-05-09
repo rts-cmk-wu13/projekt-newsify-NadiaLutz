@@ -5,7 +5,7 @@ export default function renderIntro(app, onComplete) {
     container.className = "intro-container";
   
     const logo = document.createElement("img");
-    logo.src = "./src/img/newsify_logo.png";
+    logo.src = "/img/newsify_logo.png";
     logo.className = "intro-logo";
   
     const text = document.createElement("div");

@@ -12,7 +12,7 @@ export default function renderLogin(app) {
   loginContainer.className = "login";
 
   const logo = document.createElement("img");
-  logo.src = "src/img/newsify_logo.png";
+  logo.src = "/img/newsify_logo.png";
   logo.alt = "Newsify Logo";
   logo.className = "login__logo";
 

@@ -24,7 +24,7 @@ export default function renderHome(app) {
     left.className = "article__item";
 
     const logoImg = document.createElement("img");
-    logoImg.src = "src/img/newsify_logo.png";
+    logoImg.src = "/img/newsify_logo.png";
     logoImg.alt = "Section logo";
     logoImg.className = "section__logo";
 
@@ -37,7 +37,7 @@ export default function renderHome(app) {
 
     const arrow = document.createElement("img");
     arrow.className = "section__arrow";
-    arrow.src = "src/img/arrow.png";
+    arrow.src = "/img/arrow.png";
     arrow.style.transition = "transform 0.3s ease"; 
 
     header.appendChild(left);
