@@ -67,8 +67,8 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
 
     const archiveImg = document.createElement("img");
     archiveImg.src = isArchived(url)
-      ? "src/img/feather_archive-filled.png"
-      : "src/img/feather_archive-white.png";
+      ? "/img/feather_archive-filled.png"
+      : "/img/feather_archive-white.png";
     archiveImg.alt = "Archive Icon";
 
     archiveBtn.appendChild(archiveImg);
@@ -80,7 +80,7 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
       if (!archived.includes(url)) {
         archived.push(url);
         setStored(STORAGE_KEYS.archived, archived);
-        archiveImg.src = "src/img/feather_archive-filled.png";
+        archiveImg.src = "/img/feather_archive-filled.png";
 
         setTimeout(() => {
           cardContainer.style.transition = "opacity 0.3s ease, transform 0.3s ease";
@@ -103,7 +103,7 @@ export function createArticleCard(title, abstract, url, thumbnail, section, mode
     deleteBtn.title = "Delete";
 
     const deleteImg = document.createElement("img");
-    deleteImg.src = "src/img/feather_trash.png";
+    deleteImg.src = "/img/feather_trash.png";
     deleteImg.alt = "Delete Icon";
 
     deleteBtn.appendChild(deleteImg);

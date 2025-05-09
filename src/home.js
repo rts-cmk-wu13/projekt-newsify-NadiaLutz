@@ -37,7 +37,7 @@ export default function renderHome(app) {
 
     const arrow = document.createElement("img");
     arrow.className = "section__arrow";
-    arrow.src = "src/img/arrow.png";
+    arrow.src = "/img/arrow.png";
     arrow.style.transition = "transform 0.3s ease"; 
 
     header.appendChild(left);
