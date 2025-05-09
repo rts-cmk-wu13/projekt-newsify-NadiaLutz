@@ -5,31 +5,30 @@ if (storedTheme === "dark") {
   document.body.classList.remove("dark");
 }
 
-import onboarding1 from './img/onboarding1.png';
-import onboarding2 from './img/onboarding2.png';
-import onboarding3 from './img/onboarding3.png';
+//WRTING A COMMENT JUST TO TEST GIT
+// }
 
 const onboardingData = [
   {
-    img: onboarding1,
+    img: '/img/onboarding1.png',
     title: "Stay Connected.\nEverywhere, Anytime.",
     description: "Welcome to Newsify, your ultimate destination for breaking news, exclusive stories, and tailored content.",
     screen: "1"
   },
   {
-    img: onboarding2,
+    img: '/img/onboarding2.png',
     title: "Become a Savvy\nGlobal Citizen.",
     description: "Discover tailored news that aligns with your interests and preferences. Your personalized news journey awaits!",
     screen: "2"
   },
   {
-    img: onboarding3,
+    img: '/img/onboarding3.png',
     title: "Enhance your News\nJourney Now!",
     description: "Be a part of our dynamic community and contribute your insights and participate in enriching conversations.",
-    screen: "3"
+    screen: "3" 
   }
 ];
-
+ 
 export default function renderOnboarding(app, onComplete) {
   let currentSlide = 0;
   const container = document.createElement("main");
